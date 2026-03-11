@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "dev.tabletexpansion.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ClipboardScreenAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

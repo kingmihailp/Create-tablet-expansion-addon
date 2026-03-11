@@ -1,0 +1,72 @@
+plugins {
+    id 'net.neoforged.moddev' version '2.0.78'
+}
+
+group = project.mod_group
+version = project.mod_version
+base.archivesName = project.mod_id
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+    }
+
+    mods {
+        "${project.mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+repositories {
+    maven {
+        name = 'Create Maven'
+        url = 'https://maven.createmod.net'
+    }
+}
+
+dependencies {
+    // Create mod (compile-only; players have it installed)
+    compileOnly "com.simibubi.create:create-1.21.1:${project.create_version}:slim"
+    // Catnip UI library (bundled with Create, compile-only)
+    compileOnly "net.createmod.catnip:Catnip-NeoForge-1.21.1:${project.catnip_version}"
+}
+
+// Include sources jar
+java {
+    withSourcesJar()
+}
+
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+        mod_id        : project.mod_id,
+        mod_name      : project.mod_name,
+        mod_version   : project.mod_version,
+        mod_group     : project.mod_group,
+        minecraft_version: project.minecraft_version,
+        neo_version   : project.neo_version,
+        create_version: project.create_version
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
