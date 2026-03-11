@@ -36,6 +36,11 @@ neoForge {
 }
 
 repositories {
+    // Local cached copies of Create and Catnip (avoids maven.createmod.net timeout issues)
+    maven {
+        name = 'Local Cache'
+        url = rootProject.file('libs/local-maven').toURI()
+    }
     maven {
         name = 'Create Maven'
         url = 'https://maven.createmod.net'
