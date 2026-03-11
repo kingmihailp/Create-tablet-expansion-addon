@@ -27,7 +27,6 @@ import com.simibubi.create.content.equipment.clipboard.ClipboardScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.widget.IconButton;
-import com.simibubi.create.foundation.utility.CreateLang;
 import dev.tabletexpansion.mixin.ClipboardScreenAccessor;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -192,14 +191,14 @@ public class ExpandedClipboardScreen extends AbstractSimiScreen {
         // Close button – bottom-right
         closeBtn = new IconButton(x + WIN_WIDTH - 20, y + windowHeight - 22, AllIcons.I_PRIORITY_VERY_LOW)
                 .withCallback(() -> minecraft.setScreen(null));
-        closeBtn.setToolTip(CreateLang.translateDirect("station.close"));
+        closeBtn.setToolTip(net.minecraft.network.chat.Component.translatable("create.station.close"));
         addRenderableWidget(closeBtn);
 
         // Clear-checked button – just left of close
         if (!readOnly) {
             clearBtn = new IconButton(x + WIN_WIDTH - 38, y + windowHeight - 22, AllIcons.I_CLEAR_CHECKED)
                     .withCallback(this::clearChecked);
-            clearBtn.setToolTip(CreateLang.translateDirect("gui.clipboard.erase_checked"));
+            clearBtn.setToolTip(net.minecraft.network.chat.Component.translatable("create.gui.clipboard.erase_checked"));
             addRenderableWidget(clearBtn);
         }
     }
